@@ -31,6 +31,10 @@ export class HomePage extends PageObject {
     await this.signInHeaderButton.click({timeout: 10000});
   }
 
+  async clickOnLogoButton() {
+    await this.logoButton.click({timeout: 10000});
+  }
+
   async checkElementsVisibility() {
     await expect(this.signInHeaderButton).toBeVisible();
     await expect(this.signUpHeaderButton).toBeVisible();

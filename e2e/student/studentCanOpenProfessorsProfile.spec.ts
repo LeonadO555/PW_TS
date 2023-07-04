@@ -1,16 +1,18 @@
 import {expect, Page, test, TestInfo} from '@playwright/test';
-import {loginTestHelperStudent} from '../../helpers/common';
+import {loginTestHelper} from '../../helpers/common';
 import {StudentMainPage} from '../../pages/student/StudentMainPage';
 import {ProfessorsPage} from '../../pages/student/ProfessorsPage';
 import {ProfessorsProfilePage} from '../../pages/student/ProfessorsProfilePage';
 
 interface SearchingOfProfessor {
   requestText: string;
+  professorsEmail: string;
+  role: string;
   positive?: boolean;
 }
 
 const testMethod = async (page: Page, testInfo: TestInfo, searchingOfProfessor: SearchingOfProfessor) => {
-  await loginTestHelperStudent(page, 'malik@example.com', '123456');
+  await loginTestHelper(page, 'malik@example.com', '123456');
   const studentMainPage = new StudentMainPage(page);
 
   await studentMainPage.checkVisibilityOfElements();
@@ -28,9 +30,13 @@ const testMethod = async (page: Page, testInfo: TestInfo, searchingOfProfessor: 
     await professorsPage.clickOnViewProfileButton();
 
     const professorsProfilePage = new ProfessorsProfilePage(page);
-    await professorsProfilePage.checkEmailVisibility();
-    await professorsProfilePage.checkRoleVisibility();
-    await professorsProfilePage.checkProfessorOfTitle();
+    expect(
+      await professorsProfilePage.checkPageContainsInformationAboutProfessor(
+        searchingOfProfessor.requestText,
+        searchingOfProfessor.role,
+        searchingOfProfessor.professorsEmail
+      )
+    ).toBe(true);
   } else {
     await professorsPage.scrollToNoResultFoundMessage();
     await professorsPage.checkNoResultsFoundMessage();
@@ -41,6 +47,8 @@ test.describe('Student can search professor and open professors profile', async 
   test('Search and open existing text', async ({page}, testInfo) => {
     const searchingOfProfessor: SearchingOfProfessor = {
       requestText: 'Roxanne',
+      professorsEmail: 'roxanne@example.com',
+      role: 'teacher',
       positive: true,
     };
     await testMethod(page, testInfo, searchingOfProfessor);
@@ -49,6 +57,8 @@ test.describe('Student can search professor and open professors profile', async 
   test('Search not existing text', async ({page}, testInfo) => {
     const searchingOfProfessor: SearchingOfProfessor = {
       requestText: 'ბლაბლაბლა',
+      professorsEmail: null,
+      role: null,
       positive: false,
     };
     await testMethod(page, testInfo, searchingOfProfessor);

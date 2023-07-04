@@ -33,7 +33,7 @@ export class LoginPage extends PageObject {
     await this.passwordField.fill(password);
   }
 
-  async clickOnSignInButtonInTheForm() {
+  async clickOnSubmitButton() {
     await this.signInButtonInTheForm.click({timeout: 10000});
   }
 
