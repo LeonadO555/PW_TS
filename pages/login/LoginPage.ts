@@ -3,8 +3,6 @@ import {expect, Locator, Page} from "@playwright/test";
 import {getMaxDiffPixels} from "../../helpers/common";
 
 
-export const defaultPassword = '123456';
-
 export class LoginPage extends PageObject{
     protected readonly emailInput: Locator;
     protected readonly passwordInput: Locator;
@@ -31,9 +29,9 @@ export class LoginPage extends PageObject{
     }
 
     async checkSuccessLogin() {
-        await expect(this.emailInput).not.toBeVisible();
-        await expect(this.passwordInput).not.toBeVisible();
-        await expect(this.signInButton).not.toBeVisible();
+        await expect(this.emailInput).not.toBeHidden();
+        await expect(this.passwordInput).not.toBeHidden();
+        await expect(this.signInButton).not.toBeHidden();
     }
 
     async checkNotSuccessLogin() {

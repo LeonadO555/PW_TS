@@ -1,6 +1,6 @@
 import {expect, Page, test, TestInfo} from "@playwright/test";
-import {defaultPassword, LoginPage} from "../../pages/login/LoginPage";
-import {getMaxDiffPixels} from "../../helpers/common";
+import {LoginPage} from "../../pages/login/LoginPage";
+import {defaultPassword, getMaxDiffPixels} from "../../helpers/common";
 
 
 interface StudentsCredential{
@@ -23,7 +23,7 @@ const testMethod = async (page: Page, testInfo: TestInfo, userCredential: Studen
     }
 };
 
-test.describe('Student should be able to login', async () => {
+test.describe('User can work with login', async () => {
     test('login standard user', async ({page}, testInfo) => {
         const testStudentCredential: StudentsCredential = {
             email: 'malik@example.com',
@@ -34,16 +34,16 @@ test.describe('Student should be able to login', async () => {
     });
 
 
-        test('login invalid user with valid password', async ({page}, testInfo) => {
+        test('login user with invalid email', async ({page}, testInfo) => {
             const testStudentCredential: StudentsCredential = {email: 'malic@example.comr', password: defaultPassword};
             await testMethod(page, testInfo, testStudentCredential);
         });
 
-        test('login standard user with invalid password', async ({page}, testInfo) => {
+        test('login user with invalid password', async ({page}, testInfo) => {
             const testStudentCredential: StudentsCredential = {email: 'malik@example.com', password: '123567'};
             await testMethod(page, testInfo, testStudentCredential);
         });
-        test('login with empty fields', async ({page}, testInfo) => {
+        test('user can not login with empty fields', async ({page}, testInfo) => {
             const testStudentCredential: StudentsCredential = {email: ' ', password: ' '};
             await testMethod(page, testInfo, testStudentCredential);
         });

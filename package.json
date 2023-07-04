@@ -1,0 +1,14 @@
+{
+  "name": "pw_ts",
+  "version": "1.0.0",
+  "description": "THIS IS SHOULD BE DESCRIPTION INSTALL PW AND ETC",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@playwright/test": "^1.33.0",
+    "prettier": "2.8.8"
+  }
+}
