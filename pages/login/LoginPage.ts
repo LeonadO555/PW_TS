@@ -29,9 +29,9 @@ export class LoginPage extends PageObject{
     }
 
     async checkSuccessLogin() {
-        await expect(this.emailInput).not.toBeHidden();
-        await expect(this.passwordInput).not.toBeHidden();
-        await expect(this.signInButton).not.toBeHidden();
+        await expect(this.emailInput).toBeHidden();
+        await expect(this.passwordInput).toBeHidden();
+        await expect(this.signInButton).toBeHidden();
     }
 
     async checkNotSuccessLogin() {
