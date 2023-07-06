@@ -8,17 +8,21 @@ export class ProfessorsProfilePage extends PageObject {
     super(page, '/');
   }
 
-  async checkPageContainsInformationAboutProfessor(
+  async checkContainsInfoAboutProfessor(
     professorName: string,
     teacherRole: string,
     teacherEmail: string
   ): Promise<boolean> {
-    const waitForOption1: WaitForSelectorOptions = {text: professorName};
-    await this.page.waitForSelector(`:text("${professorName}")`, waitForOption1);
-    const waitForOption2: WaitForSelectorOptions = {text: teacherRole};
-    await this.page.waitForSelector(`:text("${teacherRole}")`, waitForOption2);
-    const waitForOption3: WaitForSelectorOptions = {text: teacherEmail};
-    await this.page.waitForSelector(`:text("${teacherEmail}")`, waitForOption3);
-    return true;
+    try {
+      const waitForOption1: WaitForSelectorOptions = {text: professorName};
+      await this.page.waitForSelector(`:text("${professorName}")`, waitForOption1);
+      const waitForOption2: WaitForSelectorOptions = {text: teacherRole};
+      await this.page.waitForSelector(`:text("${teacherRole}")`, waitForOption2);
+      const waitForOption3: WaitForSelectorOptions = {text: teacherEmail};
+      await this.page.waitForSelector(`:text("${teacherEmail}")`, waitForOption3);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
