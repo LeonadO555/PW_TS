@@ -33,8 +33,8 @@ export class ProfessorsPage extends PageObject {
     return true;
   }
 
-  async checkNoResultsFoundMessage() {
-    await expect(this.noResultsFoundMessage).toBeVisible();
+  async checkEmptyForm() {
+    await expect(await this.viewProfileButton).toBeHidden();
   }
 
   async scrollToSearchProfessorsField() {
