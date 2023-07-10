@@ -26,7 +26,7 @@ const testMethod = async (page: Page, testInfo: TestInfo, userCredential: UsersC
 
 };
 test.describe('User can work with login', async () => {
-    test('teacher login', async ({page}, testInfo) => {
+    test('User can login role teacher', async ({page}, testInfo) => {
         const testUserCredential: UsersCredential = {
             email: 'vse23688@omeie.com',
             password: defaultPassword,
@@ -36,7 +36,7 @@ test.describe('User can work with login', async () => {
     });
 
 
-    test('student login', async ({page}, testInfo) => {
+    test('User can login role student', async ({page}, testInfo) => {
         const testUserCredential: UsersCredential = {
             email: 'tafida6678@eimatro.com',
             password: defaultPassword,
@@ -48,7 +48,7 @@ test.describe('User can work with login', async () => {
         const testStudentCredential: UsersCredential = {
             email: ' ',
             password: ' ',
-            positive: false,
+
         };
         await testMethod(page, testInfo, testStudentCredential);
     });
@@ -57,7 +57,7 @@ test.describe('User can work with login', async () => {
         const testStudentCredential: UsersCredential = {
             email: 'tafida6678@eimatro.com',
             password: '1737663',
-            positive: false,
+
         };
         await testMethod(page, testInfo, testStudentCredential);
     });
@@ -66,7 +66,7 @@ test.describe('User can work with login', async () => {
             const testStudentCredential: UsersCredential = {
                 email: 'malic@exple.comr',
                 password: defaultPassword,
-                positive: false,
+
             };
             await testMethod(page, testInfo, testStudentCredential);
         });
