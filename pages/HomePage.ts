@@ -11,6 +11,8 @@ export class HomePage extends PageObject {
     protected readonly studentDirectoryButton: Locator;
     protected readonly avatarButton: Locator;
     protected readonly singOutButton: Locator;
+    protected readonly courseList: Locator;
+    protected readonly goToButton: Locator;
 
     constructor(page: Page) {
         super(page, '/');
@@ -23,6 +25,11 @@ export class HomePage extends PageObject {
         this.studentDirectoryButton = page.locator('//span[normalize-space()=\'Student Directory\']');
         this.avatarButton = page.locator('//span[normalize-space()=\'Student Directory\']');
         this.singOutButton = page.locator('//span[normalize-space()=\'Sign Out\']');
+        this.coursesButton = page.locator('//span[normalize-space()=\'Courses\']');
+        this.courseList = page.locator('//*[@class=\'list-container\']');
+        this.courseList = page.locator('//*[@data-item-index=\'0\']//a');
+        this.goToButton =  page.getByRole('link', { name: 'GO TO ->' });
+
     }
     async checkSuccessLoginUserOnHomePage(){
         await expect(this.avatarButton).toBeVisible();
@@ -30,5 +37,21 @@ export class HomePage extends PageObject {
     }
     async clickOnSignInHeaderButton(){
         await this.signInHeaderButton.click({timeout: 10000});
+    }
+    async clickOnProfessorsButton(){
+        await this.professorsButton.click({timeout: 10000});
+    }
+    async clickOnCoursesButton(){
+        await this.coursesButton.click({timeout: 10000});
+    }
+    async userCanViewCourses(){
+        await expect(this.courseList.first()).toBeVisible();
+        return await this.courseList.allInnerTexts();
+    }
+    async clickOnGoToButton(){
+        await this.goToButton.first().click();
+    }
+    async clickOnStudentDerictoryButton(){
+        await this.studentDirectoryButton.click();
     }
 }

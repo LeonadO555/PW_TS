@@ -1,6 +1,7 @@
 import {expect, Locator, Page} from '@playwright/test';
 
 import {LoginPage} from '../pages/LoginPage';
+import {HomePage} from "../pages/HomePage";
 
 export const getMaxDiffPixels = (width: number, height: number): number => {
   return Math.round(((width * height) / 100) * 0.01);
@@ -19,8 +20,10 @@ export const takeScreenshotOfElement = async (selector: Locator, fileName: strin
 };
 
 export const loginTestHelper = async (page: Page, userEmail: string, password: string = defaultPassword) => {
+  const homepage = new HomePage(page);
+  await homepage.goto();
+  await  homepage.clickOnSignInHeaderButton();
   const loginPage = new LoginPage(page);
-  await loginPage.goto();
   await loginPage.fillLoginForm(userEmail, password);
   await loginPage.clickOnSubmitButton();
   await loginPage.checkSuccessLogin();
