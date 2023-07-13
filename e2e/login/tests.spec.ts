@@ -3,15 +3,16 @@ import {defaultEmailStudent, defaultEmailTeacher, defaultPassword, LoginPage} fr
 
 
 interface UsersCredential {
-  emailUserField: string;
-  passwordField: string;
+  emailUserInput: string;
+  passwordInput: string;
   positive?: boolean;
 }
+
 
 const testMethod = async (page: Page, testInfo: TestInfo, userCredential: UsersCredential) => {
   const loginPage = new LoginPage(page)
   await loginPage.goto();
-  await loginPage.signIn(userCredential.emailUserField, userCredential.passwordField);
+  await loginPage.login(userCredential.emailUserInput, userCredential.passwordInput);
   await loginPage.clickOnLoginButton();
   if (userCredential.positive){
     await loginPage.checkSuccessLogin();
@@ -23,35 +24,33 @@ const testMethod = async (page: Page, testInfo: TestInfo, userCredential: UsersC
 test.describe('User should be able to login', async () => {
   test('login teacher user', async ({page}, testInfo) => {
     const testUserCredential: UsersCredential = {
-      emailUserField: defaultEmailTeacher,
-      passwordField: defaultPassword,
+      emailUserInput: defaultEmailTeacher,
+      passwordInput: defaultPassword,
       positive: true,
     };
     await testMethod(page, testInfo, testUserCredential);
   });
   test('login student user', async ({page}, testInfo) => {
     const testUserCredential: UsersCredential = {
-      emailUserField: defaultEmailStudent,
-      passwordField: defaultPassword,
+      emailUserInput: defaultEmailStudent,
+      passwordInput: defaultPassword,
       positive: true,
     };
     await testMethod(page, testInfo, testUserCredential);
   });
 
-  test.describe('User should mot be able to login', async () => {
+  test.describe('User should not be able to login', async () => {
     test('login invalid password', async ({page}, testInfo) => {
       const testUserCredential: UsersCredential = {
-        emailUserField: defaultEmailTeacher,
-        passwordField: '12password34',
-        positive: false,
+        emailUserInput: defaultEmailTeacher,
+        passwordInput: '12password34',
       };
       await testMethod(page, testInfo, testUserCredential);
     });
   test('login invalid email', async ({page}, testInfo) => {
     const testUserCredential: UsersCredential = {
-      emailUserField: 'invalidemail@example.com',
-      passwordField: defaultPassword,
-      positive: false,
+      emailUserInput: 'invalidemail@example.com',
+      passwordInput: defaultPassword,
     };
     await testMethod(page, testInfo, testUserCredential);
   });

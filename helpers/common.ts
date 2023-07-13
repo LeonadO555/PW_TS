@@ -1,6 +1,5 @@
 import {expect, Locator, Page} from '@playwright/test';
 import {LoginPage} from '../pages/login/LoginPage';
-
 export const getMaxDiffPixels = (width: number, height: number): number => {
   return Math.round(((width * height) / 100) * 0.01);
 };
@@ -12,6 +11,15 @@ export enum CourseData {
   COURSE_END_DATA = 'July 10 2023',
 }
 
+export enum Faculty {
+  BUSINESS_SCHOOL = 'Business School',
+  ENGINEERING = 'Engineering',
+  SCIENCES = 'Sciences',
+  LAW = 'Law',
+  MEDICINE = 'Medicine',
+  ARTS_DESIGN_AND_ARCHITECTURE = 'Arts, Design & Architecture',
+}
+
 export const takeScreenshotOfElement = async (selector: Locator, fileName: string) => {
   const boundingBox = await selector.boundingBox();
   const width = boundingBox?.width || 0;
@@ -21,9 +29,11 @@ export const takeScreenshotOfElement = async (selector: Locator, fileName: strin
   });
 };
 
-export const loginTestHelper = async (page: Page, email: string, password: string = '123456') => {
+export const loginTestHelper = async (page: Page, username: string, password: string) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
-  await loginPage.signIn(email, password);
+  await loginPage.login(username, password);
   await loginPage.clickOnLoginButton();
+  await loginPage.checkSuccessLogin();
 };
+
