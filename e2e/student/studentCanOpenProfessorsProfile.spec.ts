@@ -39,7 +39,6 @@ const testMethod = async (page: Page, testInfo: TestInfo, searchingOfProfessor: 
       'Check that profile page contains text'
     ).toBe(true);
   } else {
-    await professorsPage.scrollToNoResultFoundMessage();
     await professorsPage.checkEmptyForm();
   }
 };
