@@ -27,8 +27,6 @@ export class LoginPage extends PageObject{
         await this.emailInput.fill(userEmail);
         await this.passwordInput.fill(password);
     }
-
-
     async checkSuccessLogin(){
         await expect(this.emailInput).not.toBeVisible();
         await expect(this.passwordInput).not.toBeVisible();
@@ -45,8 +43,5 @@ export class LoginPage extends PageObject{
 
     async clickOnSubmitButton() {
         await this.signInButton.click();
-    }
-    async clickOnSingUpButton(){
-        await this.signUpButton.click();
     }
 }

@@ -23,16 +23,12 @@ export class HomePage extends PageObject {
         this.coursesDropDownMenu = page.locator('//span[normalize-space()=\'Add course\']');
         this.courseListButton = page.locator('//div[@class=\'MuiBox-root css-0\']//a[@role=\'menuitem\']');
         this.studentDirectoryButton = page.locator('//span[normalize-space()=\'Student Directory\']');
-        this.avatarButton = page.locator('//span[normalize-space()=\'Student Directory\']');
+        this.avatarButton = page.locator('//div[@category=\'Header\']//header//div//div//div//button[@type=\'button\']');
         this.singOutButton = page.locator('//span[normalize-space()=\'Sign Out\']');
         this.coursesButton = page.locator('//span[normalize-space()=\'Courses\']');
         this.courseList = page.locator('//*[@class=\'list-container\']');
         this.courseList = page.locator('//*[@data-item-index=\'0\']//a');
         this.goToButton =  page.getByRole('link', { name: 'GO TO ->' });
-
-    }
-    async checkSuccessLoginUserOnHomePage(){
-        await expect(this.avatarButton).toBeVisible();
 
     }
     async clickOnSignInHeaderButton(){
@@ -51,7 +47,7 @@ export class HomePage extends PageObject {
     async clickOnGoToButton(){
         await this.goToButton.first().click();
     }
-    async clickOnStudentDerictoryButton(){
+    async clickOnStudentDirectoryButton(){
         await this.studentDirectoryButton.click();
     }
 }
