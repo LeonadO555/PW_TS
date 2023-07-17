@@ -1,5 +1,6 @@
 import {expect, Locator, Page} from '@playwright/test';
 import {LoginPage} from '../pages/login/LoginPage';
+
 export const getMaxDiffPixels = (width: number, height: number): number => {
   return Math.round(((width * height) / 100) * 0.01);
 };
@@ -36,4 +37,9 @@ export const loginTestHelper = async (page: Page, username: string, password: st
   await loginPage.clickOnLoginButton();
   await loginPage.checkSuccessLogin();
 };
-
+export const loginHelp = async (page: Page, username: string, password: string) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.login(username, password);
+  await loginPage.clickOnLoginButton();
+  await loginPage.checkSuccessLogin();
+};
