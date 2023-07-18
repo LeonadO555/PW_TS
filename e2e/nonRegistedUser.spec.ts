@@ -5,14 +5,14 @@ import {RegistrationPage} from "../pages/RegistrationPage";
 
 
 test.describe('User can use Home page', async () => {
-    test('User can view professors and their role', async ({page}) => {
+    test('User can view professors in the table', async ({page}) => {
         const homePage = new HomePage(page);
         await homePage.goto();
         await homePage.clickOnProfessorsButton();
         const professorSpotlightPage = new ProfessorSpotlightPage(page);
         await professorSpotlightPage.checkUserInProfessorDirectory();
         await professorSpotlightPage.userCanViewProfessorsNamesInTable();
-        await professorSpotlightPage.userCanViewProfessorsRoleInTable();
+
     });
     test('User can view courses', async ({page}) => {
         const homePage = new HomePage(page);

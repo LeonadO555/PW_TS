@@ -29,7 +29,7 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     actionTimeout: 5000,
-    baseURL: 'https://jere237.softr.app/',
+    baseURL: 'https://erich416.softr.app/',
   },
 
   /* Configure projects for major browsers */
