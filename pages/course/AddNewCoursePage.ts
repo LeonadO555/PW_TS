@@ -1,7 +1,5 @@
 import {PageObject} from '../PageObject';
 import {expect, Locator, Page} from '@playwright/test';
-import {faker} from '@faker-js/faker';
-import {takeScreenshotOfElement} from '../../helpers/common';
 
 export enum FacultyList {
   BUSINESS_SCHOOL = 'Business School',
@@ -28,6 +26,9 @@ export class AddNewCoursePage extends PageObject {
   protected readonly courseEndDate: Locator;
   protected readonly addCourseButton: Locator;
   protected readonly successMessage: Locator;
+  protected readonly calendarDates: Locator;
+  protected readonly userAvatar: Locator;
+  protected readonly signOutButton: Locator;
 
   constructor(page: Page) {
     super(page, '/add-course');
@@ -40,7 +41,12 @@ export class AddNewCoursePage extends PageObject {
     this.courseStartDate = page.locator("//div[@field='Start date']//input");
     this.courseEndDate = page.locator("//div[@field='End date']//input");
     this.addCourseButton = page.locator("//button[@type='submit']");
-    this.successMessage = page.locator("/button[@label='Add']//span[@class='MuiTouchRipple-root css-w0pj6f']");
+    this.successMessage = page.locator(
+      "//p[@class='sw-font-size-xs sw-text-color-5a5d63 sw-font-family-default sw-font-weight-medium sw-padding-top-7xs sw-padding-bottom-none sw-letter-spacing-normal']"
+    );
+    this.calendarDates = page.locator("//div[@class='rdrMonth']//div[@class='rdrDays']");
+    this.userAvatar = page.locator("//img[@alt='Roxanne']");
+    this.signOutButton = page.getByText('Sign Out');
   }
 
   async checkVisibilityOfElements() {
@@ -63,40 +69,39 @@ export class AddNewCoursePage extends PageObject {
     await this.coverPhotoInput.setInputFiles(photoPath);
   }
 
-  formatDate(date: Date): string {
-    return date
-      .toLocaleDateString('en-US', {
-        month: 'long',
-        day: '2-digit',
-        year: 'numeric',
-      })
-      .replace(',', '');
+  async clickOnStartDate() {
+    await this.courseStartDate.click();
   }
 
-  async setRandomCourseDates() {
-    const startDate = faker.date.future();
-    const endDate = faker.date.between(startDate, faker.date.future(2));
+  async clickOnEndDate() {
+    await this.courseEndDate.click();
+  }
 
-    await new Promise((res: any, _: any) => {
-      setTimeout(() => {
-        res();
-      }, 3000);
-    });
+  getRandomDay() {
+    const now = new Date();
+    const daysCount = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    return Math.floor(Math.random() * (daysCount + 1));
+  }
 
-    await this.page.evaluate(
-      ({start, end}) => {
-        (document.querySelector("div[field='Start date'] input") as HTMLInputElement).value = start;
-        (document.querySelector("div[field='End date'] input") as HTMLInputElement).value = end;
-      },
-      {start: this.formatDate(startDate), end: this.formatDate(endDate)}
-    );
+  async chooseStartData(startData: number = this.getRandomDay()) {
+    await this.clickOnStartDate();
+    await this.calendarDates.locator(`//button[not(contains(@class, 'rdrDayPassive')) and  .="${startData}"]`).click();
+  }
+  async chooseEndData(endData: number = this.getRandomDay()) {
+    await this.clickOnEndDate();
+    await this.calendarDates.locator(`//button[not(contains(@class, 'rdrDayPassive'))  and  .="${endData}"]`).click();
   }
 
   async clickOnAddButton() {
     await this.addCourseButton.click({timeout: 10000});
   }
 
-  async takeScreenshotForSuccessMessage(fileName: string) {
-    await takeScreenshotOfElement(this.successMessage, fileName);
+  async checkSuccessMsgPresent() {
+    await expect(this.successMessage).toBeVisible();
+  }
+
+  async logoutUser() {
+    await this.userAvatar.click();
+    await this.signOutButton.click();
   }
 }

@@ -9,7 +9,7 @@ export class PageObject {
     this.pageUrl = pageUrl;
   }
 
-  async goto(options?: object) {
+  async goto(options: object = {}) {
     let pageUrl: string = this.pageUrl;
     for (const key in options) {
       const reqExp = new RegExp('\\{' + key + '\\}', 'gi');
