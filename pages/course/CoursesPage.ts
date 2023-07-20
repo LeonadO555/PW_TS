@@ -26,7 +26,6 @@ export class CoursesPage extends PageObject {
 
   async clickOnCourseName(text: string) {
     await expect(await this.page.locator(`text=${text}`)).toBeVisible();
-    //await this.page.locator(`text=${text}`).click();
     await this.courseNameText.click({timeout: 10000});
   }
 }
